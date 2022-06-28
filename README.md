@@ -1,2 +1,3 @@
 # basic-functions
-basic algorithms and functions used globally
+- basic algorithms and functions
+- made to use wherever needed
