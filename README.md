@@ -1,2 +1,2 @@
 # unity-functions
-- algorithms and functions I used in Unity
+- algorithms and functions made for Unity
