@@ -1,3 +1,2 @@
-# basic-functions
-- basic algorithms and functions
-- made to use wherever needed; mainly in Unity
+# unity-functions
+- algorithms and functions I used in Unity
