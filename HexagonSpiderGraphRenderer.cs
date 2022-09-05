@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Festa.Client.RefData;
-using TMPro;
 
 namespace Festa.Client
 {
@@ -13,25 +12,10 @@ namespace Festa.Client
     public class HexagonSpiderGraphRenderer : LineSegmentsRenderer
     {
         [SerializeField]
-        private TMP_Text[] levelLabels;
-        [SerializeField]
         private Image[] dots;
-        [SerializeField]
-        private RectTransform rect_label;
-        [SerializeField]
-        private TMP_Text txt_label;
-        [SerializeField]
-        private TMP_Text txt_title;
-        [SerializeField]
-        private TMP_Text txt_topDesc;
-        [SerializeField]
-        private Color[] statColors;     // 일단은 이렇게 해놓고 뭔가 좀 확정되면 차트에 저장해 놓자!!
-        [SerializeField]
-        private Color[] dotColors;
 
         private float[] targetLength = new float[6];
         private Vector3[] targetPoints = new Vector3[6];
-        private float _labelOffsetY = -7f;
 
         private Vector2 _centerPoint = new Vector2(0f, -151f);
         private Vector3 startPoint;
@@ -43,32 +27,20 @@ namespace Festa.Client
         private Color _graphColor;
         private Color _dotColor;
 
-        public void setScore(float exp, float fit, float emo, float iint, float ins, float soc)
+        public void setScore(float v0, float v1, float v2, float v3, float v4, float v5)
         {
-            targetLength[0] = exp;
-            targetLength[1] = fit;
-            targetLength[2] = emo;
-            targetLength[3] = iint;
-            targetLength[4] = ins;
-            targetLength[5] = soc;
-        }
-
-        public void setLevel(float exp, float fit, float emo, float iint, float ins, float soc)
-        {
-            levelLabels[0].text = exp.ToString();
-            levelLabels[1].text = fit.ToString();
-            levelLabels[2].text = emo.ToString();
-            levelLabels[3].text = iint.ToString();
-            levelLabels[4].text = ins.ToString();
-            levelLabels[5].text = soc.ToString();
+            targetLength[0] = v0;
+            targetLength[1] = v1;
+            targetLength[2] = v2;
+            targetLength[3] = v3;
+            targetLength[4] = v4;
+            targetLength[5] = v5;
         }
 
         public void draw()
         {
-            rect_label.gameObject.SetActive(false);
-
             // 차트 만들기
-            // 그래프 상 최댓값은 150
+            // 그래프 시안 상 최댓값은 150
             int renderMax = 150;
             int top = 0;
 
@@ -96,18 +68,10 @@ namespace Festa.Client
                 targetPoints[i] = new Vector3(normalizedLength * Mathf.Cos(theta) + _centerPoint.x, normalizedLength * Mathf.Sin(theta) + _centerPoint.y, 0f);
             }
 
-            _graphColor = statColors[top];
-            _dotColor = dotColors[top];
-            string level = sc.get("lifestat.itemLevel", top);
-            txt_title.text = sc.getFormat("lifestat.title", 0, level);
-            txt_topDesc.text = sc.get("lifestat.desc", top);
-
 			for (int i = 0; i < targetPoints.Length; ++i)
             {
 				// 꼭짓점 찍기
-				dots[i].color = _dotColor;
 				dots[i].transform.parent.GetComponent<RectTransform>().anchoredPosition = targetPoints[i];
-
 			}
 
 			SetAllDirty();
